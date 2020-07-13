@@ -1,9 +1,10 @@
 export const createElementFromTemplate = (
   templatePath,
   variables,
-  callback
+  callback,
+  insertAtElement = null
 ) => {
-  var xhr = new XMLHttpRequest();
+  let xhr = new XMLHttpRequest();
   xhr.onload = () => {
     let responseText = xhr.responseText;
 
@@ -12,7 +13,8 @@ export const createElementFromTemplate = (
       responseText = responseText.replace(keyInRes, variables[key]);
     }
 
-    callback(responseText);
+    if (insertAtElement !== null) insertAtElement.innerHTML += responseText;
+    if (callback !== null) callback(responseText);
   };
 
   xhr.open("GET", templatePath);
