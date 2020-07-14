@@ -6,14 +6,8 @@ export const createElementFromTemplate = (
 ) => {
   let xhr = new XMLHttpRequest();
   xhr.onload = () => {
-    let responseText = xhr.responseText;
-
-    let elementObject = createElementObject(
-      responseText,
-      variables,
-      insertAtElement,
-      callback
-    );
+    let rawHTML = xhr.responseText.trim();
+    createElementObject(rawHTML, variables, insertAtElement, callback);
   };
 
   xhr.open("GET", templatePath);
@@ -50,7 +44,7 @@ export const createElementObject = (
     },
     set variables(v) {
       insertAtElement.innerHTML = insertAtElement.innerHTML.replace(
-        this.element.trim(),
+        this.element,
         ""
       );
 
