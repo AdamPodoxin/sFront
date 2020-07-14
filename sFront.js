@@ -48,12 +48,12 @@ export const createElementObject = (
         ""
       );
 
-      this._variables = v;
+      this._variables = { ...v };
       renderElement(this);
     },
   };
 
-  elementObject._variables = variables;
+  elementObject._variables = { ...variables };
   renderElement(elementObject);
 
   if (elementObject.callback !== null) callback(elementObject);
