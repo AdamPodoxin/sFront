@@ -68,3 +68,9 @@ export const deleteElementFromDOM = (elementObject) => {
     ""
   );
 };
+
+export const registerFunctionsInWindow = (functions) => {
+  for (let key in functions) {
+    window[key] = functions[key];
+  }
+};
