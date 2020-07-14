@@ -1,3 +1,5 @@
+let generatedElements = [];
+
 export const createElementFromTemplate = (
   templatePath,
   variables,
@@ -60,6 +62,8 @@ export const createElementObject = (
 
   if (elementObject.callback !== null) callback(elementObject);
 
+  generatedElements.push(elementObject);
+
   return elementObject;
 };
 
@@ -78,10 +82,24 @@ export const renderElement = (elementObject) => {
 
 export const deleteElementFromDOM = (elementObject) => {
   document.getElementById(elementObject.id).remove();
+
+  const deleteIndex = generatedElements.indexOf(elementObject);
+  generatedElements.splice(deleteIndex, 1);
+};
+
+export const deleteElementFromDOMById = (id) => {
+  const elementToDelete = getElementObjectById(id);
+  deleteElementFromDOM(elementToDelete);
 };
 
 export const registerFunctionsInWindow = (functions) => {
   for (let key in functions) {
     window[key] = functions[key];
   }
+};
+
+export const getElementObjectById = (id) => {
+  return generatedElements.filter(
+    (elementObject) => elementObject.id === id
+  )[0];
 };
