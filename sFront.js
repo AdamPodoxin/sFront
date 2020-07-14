@@ -67,7 +67,10 @@ export const renderElement = (elementObject) => {
   const thisElement = document.getElementById(elementObject.id);
 
   if (thisElement === null) {
-    elementObject.insertAtElement.innerHTML += elementObject.element;
+    elementObject.insertAtElement.insertAdjacentHTML(
+      "beforeend",
+      elementObject.element
+    );
   } else {
     thisElement.innerHTML = elementObject.elementWithoutSpan;
   }
