@@ -36,17 +36,14 @@ export const createElementObject = (
         );
       }
 
-      return formattedElement;
+      return `<span class="sFront-generated">${formattedElement}</span>`;
     },
 
     get variables() {
       return this._variables;
     },
     set variables(v) {
-      insertAtElement.innerHTML = insertAtElement.innerHTML.replace(
-        this.element,
-        ""
-      );
+      deleteElementFromDOM(this);
 
       this._variables = { ...v };
       renderElement(this);
@@ -63,4 +60,11 @@ export const createElementObject = (
 
 export const renderElement = (elementObject) => {
   elementObject.insertAtElement.innerHTML += elementObject.element;
+};
+
+export const deleteElementFromDOM = (elementObject) => {
+  elementObject.insertAtElement.innerHTML = elementObject.insertAtElement.innerHTML.replace(
+    elementObject.element,
+    ""
+  );
 };
