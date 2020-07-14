@@ -20,12 +20,15 @@ export const createElementObject = (
   insertAtElement,
   callback = null
 ) => {
+  const id = Math.random().toString(36).substr(2, 9);
+
   let elementObject = {
     rawHTML,
     insertAtElement,
     callback,
+    id,
 
-    get element() {
+    get elementWithoutSpan() {
       let formattedElement = this.rawHTML;
 
       for (let key in this._variables) {
@@ -36,15 +39,17 @@ export const createElementObject = (
         );
       }
 
-      return `<span class="sFront-generated">${formattedElement}</span>`;
+      return formattedElement;
+    },
+
+    get element() {
+      return `<span class="sFront-generated" id="${id}">${this.elementWithoutSpan}</span>`;
     },
 
     get variables() {
       return this._variables;
     },
     set variables(v) {
-      deleteElementFromDOM(this);
-
       this._variables = { ...v };
       renderElement(this);
     },
@@ -59,14 +64,17 @@ export const createElementObject = (
 };
 
 export const renderElement = (elementObject) => {
-  elementObject.insertAtElement.innerHTML += elementObject.element;
+  const thisElement = document.getElementById(elementObject.id);
+
+  if (thisElement === null) {
+    elementObject.insertAtElement.innerHTML += elementObject.element;
+  } else {
+    thisElement.innerHTML = elementObject.elementWithoutSpan;
+  }
 };
 
 export const deleteElementFromDOM = (elementObject) => {
-  elementObject.insertAtElement.innerHTML = elementObject.insertAtElement.innerHTML.replace(
-    elementObject.element,
-    ""
-  );
+  document.getElementById(elementObject.id).remove();
 };
 
 export const registerFunctionsInWindow = (functions) => {
