@@ -1,4 +1,4 @@
-import * as sFront from "../../sFront.js";
+import * as sFront from "https://adampodoxin.github.io/sFront/sFront.js";
 
 const contactTemplatePath = "contact.html";
 
