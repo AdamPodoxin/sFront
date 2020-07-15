@@ -40,6 +40,8 @@ export const createElementObject = (
           .join(this._variables[key]);
       }
 
+      formattedElement = formattedElement.split("$id").join(this.id);
+
       return formattedElement;
     },
 
@@ -57,11 +59,10 @@ export const createElementObject = (
   };
 
   elementObject._variables = { ...variables };
+  generatedElements.push(elementObject);
   renderElement(elementObject);
 
   if (elementObject.callback !== null) callback(elementObject);
-
-  generatedElements.push(elementObject);
 
   return elementObject;
 };
