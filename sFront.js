@@ -35,10 +35,9 @@ export const createElementObject = (
 
       for (let key in this._variables) {
         const keyInRes = `$${key}`;
-        formattedElement = formattedElement.replace(
-          keyInRes,
-          this._variables[key]
-        );
+        formattedElement = formattedElement
+          .split(keyInRes)
+          .join(this._variables[key]);
       }
 
       return formattedElement;
