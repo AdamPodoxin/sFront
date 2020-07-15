@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contacts List</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+    <div id="contacts"></div>
+    <button onclick="addContact()" id="add-button">+</button>
+
+    <br /><br />
+
+    <div id="contact-prompt">
+      <input type="text" id="name-input" placeholder="Name" />
+      <br />
+      <input type="tel" id="phone-input" placeholder="Phone" />
+      <br />
+      <button onclick="submitContactPrompt()">Submit</button>
+    </div>
+
+    <script type="module" src="index.js"></script>
+  </body>
+</html>

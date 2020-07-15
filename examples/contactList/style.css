@@ -1,0 +1,18 @@
+.contact {
+  display: inline-block;
+  width: 200px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#contacts {
+  display: inline-block;
+}
+
+#contact-prompt {
+  display: none;
+}
+
+#add-button {
+  display: inline;
+}
