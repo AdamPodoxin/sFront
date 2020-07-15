@@ -1,9 +1,14 @@
 # sFront: <ins>s</ins>imple <ins>F</ins>ront-end
 
 sFront is a **component-based**, front-end, JavaScript library. Make templating easier.
+
 sFront strives for **easy integration**, **simplicity**, and **understandable syntax**.
 
+<br>
+
 Inspired by [React](https://github.com/facebook/react).
+
+<br>
 
 ### Installation
 
@@ -17,9 +22,15 @@ Inspired by [React](https://github.com/facebook/react).
 In your `JavaScript (.js)` file, either:
 
 - Import all of sFront by stating:
-  `javascript import * as sFront from "sFront.js"`
+
+  ```javascript
+  import * as sFront from "sFront.js";
+  ```
+
   You can name the sFront variable whatever you want, but ensure that you point to the correct path when importing.
+
   **OR**
+
 - Import the desired sFront methods from the sFront file
   i.e.
   ```javascript
