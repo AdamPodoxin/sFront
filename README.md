@@ -13,7 +13,8 @@ Inspired by [React](https://github.com/facebook/react).
 ### Installation
 
 1.  - Download or clone the [`sFront.js`](https://github.com/AdamPodoxin/sFront/blob/master/sFront.js) file to your project
-      **OR** - Use the [sFront CDN](https://adampodoxin.github.io/sFront/sFront.js)
+      **OR**
+    - Use the [sFront CDN](https://adampodoxin.github.io/sFront/sFront.js)
 2.  Create a new `JavaScript (.js)` file which you will use for interacting with sFront
 3.  Inlcude this file in your `HTML (.html/.htm)` file using a `<script>` tag
 4.  Ensure that the `<script>` tag has the `type` attribute set to `module` (i.e. `<script type="module" src="..."></script>`)
