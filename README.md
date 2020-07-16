@@ -1,4 +1,4 @@
-# sFront: <ins>s</ins>imple <ins>F</ins>ront-end
+# sFront: <ins>s</ins>imple <ins>Front</ins>-end
 
 sFront is a **component-based**, front-end, JavaScript library. Make templating easier.
 
