@@ -16,10 +16,9 @@
           "custom-contact",
           (elementObject) => {
             setTimeout(() => {
-              let element = document.querySelector(
-                `[sFront-id="${elementObject.id}"]`
-              );
+              let element = document.querySelector(`[id="${elementObject.id}`);
               element.setAttribute("name", "Adam");
+              element.setAttribute("phone", "000-000-0000");
             }, 1250);
           }
         );
