@@ -49,8 +49,11 @@ const submitContactPrompt = () => {
   };
 
   if (promptMode == "add") {
-    const newContact = `<custom-contact name="${nameInput.value}" phone="${phoneInput.value}"></custom-contact>`;
-    contactsDiv.insertAdjacentHTML("beforeend", newContact);
+    const newContact = document.createElement("custom-contact", {
+      name: nameInput.value,
+      phone: phoneInput.value,
+    });
+    contactsDiv.appendChild(newContact);
 
     sFront.scanForElements("custom-contact");
   } else if (promptMode == "edit") {
