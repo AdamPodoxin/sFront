@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Custom Elements with sFront</title>
+  </head>
+
+  <body>
+    <custom-contact name="Name" phone="666-666-6666"></custom-contact>
+
+    <script type="module">
+      import * as sFront from "../../sFront.js";
+
+      window.onload = () => {
+        sFront.registerElement(
+          "../contactList/contact.html",
+          "custom-contact",
+          (elementObject) => {
+            setTimeout(() => {
+              let element = document.querySelector(
+                `[sFront-id="${elementObject.id}"]`
+              );
+              element.setAttribute("name", "Adam");
+            }, 1250);
+          }
+        );
+      };
+    </script>
+  </body>
+</html>

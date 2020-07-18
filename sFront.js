@@ -1,5 +1,46 @@
 let generatedElements = [];
 
+export const registerElement = (templatePath, elementName, callback = null) => {
+  const elementsOfTag = document.getElementsByTagName(elementName);
+
+  Array.from(elementsOfTag).forEach((element) => {
+    const variables = {};
+    const attributes = element.attributes;
+
+    for (let i = 0; i < attributes.length; i++) {
+      variables[attributes[i].name] = attributes[i].value;
+    }
+
+    createElementFromTemplate(
+      templatePath,
+      variables,
+      element,
+      (elementObject) => {
+        element.setAttribute("sFront-id", elementObject.id);
+
+        let observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type == "attributes") {
+              let attributeName = mutation.attributeName;
+
+              let mutatedVariables = elementObject.variables;
+              mutatedVariables[attributeName] = element.getAttribute(
+                attributeName
+              );
+
+              elementObject.variables = mutatedVariables;
+            }
+          });
+        });
+
+        observer.observe(element, { attributes: true });
+
+        if (callback != null) callback(elementObject);
+      }
+    );
+  });
+};
+
 export const createElementFromTemplate = (
   templatePath,
   variables,
