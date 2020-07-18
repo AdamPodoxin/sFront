@@ -43,11 +43,6 @@ const deleteContact = (id) => {
 };
 
 const submitContactPrompt = () => {
-  let variables = {
-    name: nameInput.value,
-    phone: phoneInput.value,
-  };
-
   if (promptMode == "add") {
     const newContact = document.createElement("custom-contact");
     newContact.setAttribute("name", nameInput.value);
