@@ -37,7 +37,7 @@ In your `JavaScript (.js)` file, either:
   i.e.
 
   ```javascript
-  import { createElementFromTemplate } from "sFront.js";
+  import { registerElement } from "sFront.js";
   ```
 
 - If using the [sFront CDN](https://adampodoxin.github.io/sFront/sFront.js), import from `https://adampodoxin.github.io/sFront/sFront.js` instead of a local file.
