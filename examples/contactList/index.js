@@ -49,10 +49,10 @@ const submitContactPrompt = () => {
   };
 
   if (promptMode == "add") {
-    const newContact = document.createElement("custom-contact", {
-      name: nameInput.value,
-      phone: phoneInput.value,
-    });
+    const newContact = document.createElement("custom-contact");
+    newContact.setAttribute("name", nameInput.value);
+    newContact.setAttribute("phone", phoneInput.value);
+
     contactsDiv.appendChild(newContact);
 
     sFront.scanForElements("custom-contact");
