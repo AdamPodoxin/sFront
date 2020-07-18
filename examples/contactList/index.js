@@ -33,9 +33,9 @@ const editContact = (id) => {
   promptMode = "edit";
   contactPrompt.style.display = "block";
 
-  let variables = { ...sFront.getElementObjectById(editingId).variables };
-  nameInput.value = variables.name;
-  phoneInput.value = variables.phone;
+  const editingElement = document.getElementById(editingId);
+  nameInput.value = editingElement.getAttribute("name");
+  phoneInput.value = editingElement.getAttribute("phone");
 };
 
 const deleteContact = (id) => {
@@ -54,7 +54,9 @@ const submitContactPrompt = () => {
 
     sFront.scanForElements("custom-contact");
   } else if (promptMode == "edit") {
-    sFront.getElementObjectById(editingId).variables = variables;
+    const editingElement = document.getElementById(editingId);
+    editingElement.setAttribute("name", nameInput.value);
+    editingElement.setAttribute("phone", phoneInput.value);
   }
 
   nameInput.value = "";
