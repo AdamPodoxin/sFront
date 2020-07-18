@@ -1,4 +1,6 @@
-let generatedElements = [];
+let registeredElements = [],
+  scannedIds = [],
+  generatedElements = [];
 
 const createElementFromTemplate = (
   templatePath,
@@ -63,10 +65,15 @@ const createElementObject = (
   return elementObject;
 };
 
-export const registerElement = (templatePath, elementName, callback = null) => {
+const updateCustomElement = (elementName) => {
   const elementsOfTag = document.getElementsByTagName(elementName);
+  const rElement = registeredElements.filter(
+    (e) => e.elementName == elementName
+  )[0];
 
   Array.from(elementsOfTag).forEach((element) => {
+    if (scannedIds.includes(element.getAttribute("id"))) return;
+
     const variables = {};
     const attributes = element.attributes;
 
@@ -75,7 +82,7 @@ export const registerElement = (templatePath, elementName, callback = null) => {
     }
 
     createElementFromTemplate(
-      templatePath,
+      rElement.templatePath,
       variables,
       element,
       (elementObject) => {
@@ -98,10 +105,32 @@ export const registerElement = (templatePath, elementName, callback = null) => {
 
         observer.observe(element, { attributes: true });
 
-        if (callback != null) callback(elementObject);
+        scannedIds.push(elementObject.id);
+        if (rElement.callback != null) rElement.callback(elementObject);
       }
     );
   });
+};
+
+export const scanForElements = (elementName) => {
+  if (elementName == null) {
+    Array.from(registeredElements).forEach((element) => {
+      updateCustomElement(element.elementName);
+    });
+  } else {
+    updateCustomElement(elementName);
+  }
+};
+
+export const registerElement = (templatePath, elementName, callback = null) => {
+  const newElement = {
+    templatePath,
+    elementName,
+    callback,
+  };
+
+  registeredElements.push(newElement);
+  scanForElements(elementName);
 };
 
 export const renderElement = (elementObject) => {
@@ -117,16 +146,13 @@ export const renderElement = (elementObject) => {
   }
 };
 
-export const deleteElementFromDOM = (elementObject = null, id = null) => {
-  let elementToDelete;
+export const deleteElementFromDOM = (id) => {
+  document.getElementById(id).remove();
 
-  if (elementObject == null) {
-    elementToDelete = getElementObjectById(id);
-  }
-
-  document.getElementById(elementToDelete.id).remove();
-
-  const deleteIndex = generatedElements.indexOf(elementToDelete);
+  const deleteElement = generatedElements.filter(
+    (element) => element.id == id
+  )[0];
+  const deleteIndex = generatedElements.indexOf(deleteElement);
   generatedElements.splice(deleteIndex, 1);
 };
 

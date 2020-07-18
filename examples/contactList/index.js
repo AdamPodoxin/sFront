@@ -1,4 +1,4 @@
-import * as sFront from "https://adampodoxin.github.io/sFront/sFront.js";
+import * as sFront from "../../sFront.js";
 
 const contactTemplatePath = "contact.html";
 
@@ -19,6 +19,8 @@ window.onload = () => {
     addContact,
     submitContactPrompt,
   });
+
+  sFront.registerElement(contactTemplatePath, "custom-contact");
 };
 
 const addContact = () => {
@@ -37,7 +39,7 @@ const editContact = (id) => {
 };
 
 const deleteContact = (id) => {
-  sFront.deleteElementFromDOMById(id);
+  sFront.deleteElementFromDOM(id);
 };
 
 const submitContactPrompt = () => {
@@ -47,11 +49,10 @@ const submitContactPrompt = () => {
   };
 
   if (promptMode == "add") {
-    sFront.createElementFromTemplate(
-      contactTemplatePath,
-      variables,
-      contactsDiv
-    );
+    const newContact = `<custom-contact name="${nameInput.value}" phone="${phoneInput.value}"></custom-contact>`;
+    contactsDiv.insertAdjacentHTML("beforeend", newContact);
+
+    sFront.scanForElements("custom-contact");
   } else if (promptMode == "edit") {
     sFront.getElementObjectById(editingId).variables = variables;
   }
