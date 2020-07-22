@@ -73,43 +73,50 @@ const updateCustomElement = (elementName) => {
 
   Array.from(elementsOfTag).forEach((element) => {
     if (scannedIds.includes(element.getAttribute("id"))) return;
-
-    const variables = {};
-    const attributes = element.attributes;
-
-    for (let i = 0; i < attributes.length; i++) {
-      variables[attributes[i].name] = attributes[i].value;
-    }
-
-    createElementFromTemplate(
-      rElement.templatePath,
-      variables,
-      element,
-      (elementObject) => {
-        element.setAttribute("id", elementObject.id);
-
-        let observer = new MutationObserver((mutations) => {
-          mutations.forEach((mutation) => {
-            if (mutation.type == "attributes") {
-              let attributeName = mutation.attributeName;
-
-              let mutatedVariables = elementObject.variables;
-              mutatedVariables[attributeName] = element.getAttribute(
-                attributeName
-              );
-
-              elementObject.variables = mutatedVariables;
-            }
-          });
-        });
-
-        observer.observe(element, { attributes: true });
-
-        scannedIds.push(elementObject.id);
-        if (rElement.callback != null) rElement.callback(elementObject);
-      }
-    );
+    updateSingleElement(element, rElement.callback);
   });
+};
+
+export const updateSingleElement = (element, callback = null) => {
+  let variables = {};
+  let attributes = element.attributes;
+
+  let templatePath = registeredElements.filter(
+    (e) => e.elementName.toLowerCase() == element.tagName.toLowerCase()
+  )[0].templatePath;
+
+  for (let i = 0; i < attributes.length; i++) {
+    variables[attributes[i].name] = attributes[i].value;
+  }
+
+  createElementFromTemplate(
+    templatePath,
+    variables,
+    element,
+    (elementObject) => {
+      element.setAttribute("id", elementObject.id);
+
+      let observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type == "attributes") {
+            let attributeName = mutation.attributeName;
+
+            let mutatedVariables = elementObject.variables;
+            mutatedVariables[attributeName] = element.getAttribute(
+              attributeName
+            );
+
+            elementObject.variables = mutatedVariables;
+          }
+        });
+      });
+
+      observer.observe(element, { attributes: true });
+
+      scannedIds.push(elementObject.id);
+      if (callback != null) callback(elementObject);
+    }
+  );
 };
 
 export const scanForElements = (elementName) => {
